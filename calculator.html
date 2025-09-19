@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Basic Calculator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" disabled />
+    <div class="buttons">
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+      <button class="operator">/</button>
+      
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+      <button class="operator">*</button>
+      
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+      <button class="operator">-</button>
+      
+      <button>0</button>
+      <button>.</button>
+      <button id="equals">=</button>
+      <button class="operator">+</button>
+
+      <button id="clear">C</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+<style>
+    
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.calculator {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  padding: 20px;
+  width: 300px;
+}
+
+#display {
+  width: 100%;
+  height: 50px;
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: right;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+button {
+  font-size: 20px;
+  padding: 20px;
+  border: none;
+  background: #eee;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #ddd;
+}
+
+.operator {
+  background-color: #ffca28;
+}
+
+#equals {
+  background-color: #66bb6a;
+  grid-column: span 1;
+}
+
+#clear {
+  background-color: #ef5350;
+  grid-column: span 4;
+}
+
+</style>
+<script>
+    // script.js
+const display = document.getElementById('display');
+const buttons = document.querySelectorAll('button');
+
+let currentInput = '';
+let resultDisplayed = false;
+
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    const value = button.textContent;
+
+    if (value === 'C') {
+      currentInput = '';
+      display.value = '';
+    } else if (value === '=') {
+      try {
+        display.value = eval(currentInput);
+        currentInput = display.value;
+        resultDisplayed = true;
+      } catch (error) {
+        display.value = 'Error';
+        currentInput = '';
+      }
+    } else {
+      if (resultDisplayed) {
+        currentInput = '';
+        resultDisplayed = false;
+      }
+      currentInput += value;
+      display.value = currentInput;
+    }
+  });
+});
+
+</script>
